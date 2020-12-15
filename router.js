@@ -1,13 +1,18 @@
+const EssayController = require('./Controller/EssayController')
 const AuthController = require('./Controller/AuthController')
+
 const protectedRouter = require('@koa/router')();
 
-protectedRouter.post('/essay/Write',AuthController.essayWrite);
-protectedRouter.post('/essay/Edit',AuthController.essayedit);
+protectedRouter.post('/essay/write',EssayController.essayWrite);
+protectedRouter.post('/essay/edit',EssayController.essayedit);
 
 
-// const AuthController = require("./Controller/AuthController.js")
+const unprotectedRouter = require('@koa/router')();
 
+unprotectedRouter.post("/auth/login",AuthController.login)
+unprotectedRouter.post("/auth/register",AuthController.register)
 
-// unprotectedRouter.post("/essay/write",AuthController.essayWrite)
-
-module.exports = protectedRouter;
+module.exports = {
+    protectedRouter,
+    unprotectedRouter
+};
