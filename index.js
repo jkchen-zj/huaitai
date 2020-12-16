@@ -1,3 +1,4 @@
+const db = require('./db')
 const logger = require('koa-logger');
 const koaBody = require('koa-body');
 const serve = require('koa-static');
