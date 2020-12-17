@@ -1,26 +1,30 @@
 const { DataTypes } = require("sequelize");
 let db = require('../db');
 
-const User = db.define("users", {
+const Essay = db.define("essay", {
     id:{
         type: DataTypes.INTEGER(11),
         primaryKey: true,            // 主键
         autoIncrement: true,         // 自动递增
     },
-    name:{
-        type:DataTypes.STRING(20),
+    title:{
+        type:DataTypes.STRING(200),
+    },
+    uid:{
+        type: DataTypes.INTEGER(11),
+        defaultValue:1,
         allowNull:false
     },
-    password:{
-        type:DataTypes.STRING,
+    content:{
+        type:DataTypes.TEXT,
         allowNull:false
-    },
-    active:{
-        type:DataTypes.STRING, 
     },
     is_delete:{
         type:DataTypes.BOOLEAN,
         defaultValue:0
+    },
+    images:{
+        type:DataTypes.STRING(500),
     }
 
 },
@@ -29,4 +33,4 @@ const User = db.define("users", {
 }
 )
 
-module.exports = User
+module.exports = Essay
