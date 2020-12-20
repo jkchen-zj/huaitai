@@ -15,6 +15,9 @@ const User = db.define("users", {
         type:DataTypes.STRING,
         allowNull:false
     },
+    email:{
+        type:DataTypes.STRING,
+    },
     active:{
         type:DataTypes.STRING, 
     },
@@ -28,5 +31,6 @@ const User = db.define("users", {
     freezeTableName: true
 }
 )
+
 
 module.exports = User

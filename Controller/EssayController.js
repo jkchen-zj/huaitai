@@ -2,6 +2,9 @@ const fs = require('fs')
 const path = require('path')
 const os = require('os')
 
+const essay = require("../entity/essay");
+// const sss  = require("../entity/test")
+
 const essayWrite = async (ctx,next) =>{
     // if(ctx.method != "POST") return await next();
 

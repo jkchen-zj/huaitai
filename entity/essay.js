@@ -33,4 +33,6 @@ const Essay = db.define("essay", {
 }
 )
 
+
+
 module.exports = Essay
