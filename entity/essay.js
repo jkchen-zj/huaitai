@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 let db = require('../db');
 
 const Essay = db.define("essay", {
-    id:{
+    essay_id:{
         type: DataTypes.INTEGER(11),
         primaryKey: true,            // 主键
         autoIncrement: true,         // 自动递增
@@ -10,7 +10,7 @@ const Essay = db.define("essay", {
     title:{
         type:DataTypes.STRING(200),
     },
-    uid:{
+    id:{
         type: DataTypes.INTEGER(11),
         defaultValue:1,
         allowNull:false

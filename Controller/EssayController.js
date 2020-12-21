@@ -7,13 +7,12 @@ const essay = require("../entity/essay");
 
 const essayWrite = async (ctx,next) =>{
     // if(ctx.method != "POST") return await next();
-
     let files = ctx.request.files
     let title = ctx.request.body.title
 
     let result = await new Promise((resolve,reject)=>{
         if(Object.keys(files).length > 0){
-            let imgarr = [];
+            let imgarr = '';
             Object.keys(files).forEach(key=>{
                 let file = files[key]
                 const reader = fs.createReadStream(file.path)
@@ -21,7 +20,7 @@ const essayWrite = async (ctx,next) =>{
                 const newPath = path.join(__dirname,'../public/images/'+newName)
                 const stream = fs.createWriteStream(newPath)
                 reader.pipe(stream);
-                imgarr.push(newPath)
+                imgarr += newPath+','
             })
             resolve(imgarr)
         }else{

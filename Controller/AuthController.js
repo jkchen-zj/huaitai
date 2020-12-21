@@ -1,31 +1,40 @@
-const user = require("../entity/user");
+const Users = require("../entity/user");
+const argon2 = require('argon2');
 
-const login = (ctx,next)=>{
-    const jane = user.build({ name: "Jane" });
-    jane.save();
-    console.log("保存成功")
-    // (async ()=>{
-    //     await 
-    //     console.log("保存成功")
-    // })
-   
-    ctx.body="登录成功"
+var jwt = require('jsonwebtoken');
+
+const login = async (ctx,next)=>{
+   const user = await Users.findOne({
+        where: { name:ctx.require.body.name }
+    })
+    if(!user){
+        ctx.state = 1;
+        ctx.body = {
+            message: '用户名不存在'
+        }
+    }else if(await argon2.verify(user.password, ctx.request.body.password)){
+        ctx.state = 0;
+        ctx.body = { token: jwt.sign({ id: user.id }, 'shared-secret') };
+    }else{
+        ctx.state = 1;
+        ctx.body = {
+            message: '密码错误'
+        }
+    }
 }
 
 const register = async (ctx,next) => {
-    console.log(ctx.request.body.name)
-
     const newuser = {};
     newuser.name = ctx.request.body.name
-    newuser.password = ctx.request.body.password
+    newuser.password = await argon2.hash(ctx.request.body.password)
     newuser.email = ctx.request.body.email
     newuser.active = ctx.request.body.active
 
-    // console.log(newuser)
-    // await user.create({newuser});
-    
+    console.log(newuser)
+    // await Users.create({newuser});
     ctx.state = 0
-    ctx.body = "注册成功"
+    ctx.body = newuser
+    // ctx.body = "注册成功"
 }
 
 module.exports={
