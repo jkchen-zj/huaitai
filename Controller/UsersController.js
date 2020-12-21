@@ -50,7 +50,44 @@ const showUserDetail = async (ctx,nexy)=>{
     }
 }
 
+const updateUser = async (ctx,next)=>{
+    const newuser = {};
+    newuser.name = ctx.request.body.name
+    newuser.password = await argon2.hash(ctx.request.body.password)
+    newuser.email = ctx.request.body.email
+    newuser.active = ctx.request.body.active
+
+    result = await Users.update(newuser,{
+        'where':{'id':ctx.request.body.id}
+    })
+
+    if(result != null){
+        ctx.body = {
+            code: 0,
+            data:result
+        }
+    }else{
+        ctx.body = {
+            code: 3,
+            message: '错误',
+            data: err
+        };
+    }
+}
+
+const deleteUser = async(ctx,next)=>{
+    Users.destroy({
+        'where': {
+            'id': ctx.request.body.id
+        }
+    })
+    ctx.status = 204;
+    ctx.body = "删除成功"
+}
+
 module.exports = {
     listUsers,
-    showUserDetail
+    showUserDetail,
+    updateUser,
+    deleteUser
 }

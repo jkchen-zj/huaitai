@@ -4,8 +4,9 @@ const argon2 = require('argon2');
 var jwt = require('jsonwebtoken');
 
 const login = async (ctx,next)=>{
+   console.log(ctx.request.body.name)
    const user = await Users.findOne({
-        where: { name:ctx.require.body.name }
+        where: { name:ctx.request.body.name }
     })
     if(!user){
         ctx.state = 1;
@@ -31,7 +32,7 @@ const register = async (ctx,next) => {
     newuser.active = ctx.request.body.active
 
     console.log(newuser)
-    // await Users.create({newuser});
+    await Users.create(newuser);
     ctx.state = 0
     ctx.body = newuser
     // ctx.body = "注册成功"
