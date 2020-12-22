@@ -41,7 +41,7 @@ const essayWrite = async (ctx,next) =>{
     })
     if(res != null){
         imagePath(files).then(res=>{
-            newEssay.images = res;
+            newEssay.images = res.substring(0,res.length-1);
             ctx.body = newEssay
         })
     }else{
@@ -64,7 +64,7 @@ const essayedit = async ctx =>{
     })
     if(res != null){
         imagePath(files).then(res=>{
-            newEssay.images = res;
+            newEssay.images = res.substring(0,res.length-1);
             ctx.body = newEssay
         })
     }else{
