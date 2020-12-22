@@ -81,7 +81,7 @@ const deleteUser = async(ctx,next)=>{
             'id': ctx.request.body.id
         }
     })
-    ctx.status = 204;
+    ctx.status = 0;
     ctx.body = "删除成功"
 }
 
