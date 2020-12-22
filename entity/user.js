@@ -20,10 +20,6 @@ const User = db.define("users", {
     },
     active:{
         type:DataTypes.STRING, 
-    },
-    is_delete:{
-        type:DataTypes.BOOLEAN,
-        defaultValue:0
     }
 
 },

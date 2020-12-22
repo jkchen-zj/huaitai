@@ -16,7 +16,7 @@ const unprotectedRouter = require('@koa/router')();
 unprotectedRouter.post("/auth/login",AuthController.login)
 unprotectedRouter.post("/auth/register",AuthController.register)
 unprotectedRouter.post("/users",UsersController.listUsers)
-unprotectedRouter.post("/users/detail:id",UsersController.showUserDetail)
+unprotectedRouter.post("/users/detail",UsersController.showUserDetail)
 
 
 

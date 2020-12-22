@@ -19,10 +19,6 @@ const Essay = db.define("essay", {
         type:DataTypes.TEXT,
         allowNull:false
     },
-    is_delete:{
-        type:DataTypes.BOOLEAN,
-        defaultValue:0
-    },
     images:{
         type:DataTypes.STRING(500),
     }

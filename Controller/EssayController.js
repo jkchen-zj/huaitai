@@ -3,6 +3,7 @@ const path = require('path')
 const os = require('os')
 
 const Essay = require("../entity/essay");
+const Users = require("../entity/user");
 // const sss  = require("../entity/test")
 
 //转换图片
@@ -36,12 +37,13 @@ const essayWrite = async (ctx,next) =>{
     newEssay.id = ctx.request.body.id
     newEssay.content =  ctx.request.body.content
 
-    let res = await Project.findOne({
+    let res = await Users.findOne({
         id:newEssay.id
     })
     if(res != null){
         imagePath(files).then(res=>{
             newEssay.images = res.substring(0,res.length-1);
+            Essay.create(newEssay)
             ctx.body = newEssay
         })
     }else{
@@ -59,14 +61,29 @@ const essayedit = async ctx =>{
     newEssay.id = ctx.request.body.id
     newEssay.content =  ctx.request.body.content
 
-    let res = await Project.findOne({
+    let res = await Users.findOne({
         id:newEssay.id
     })
     if(res != null){
-        imagePath(files).then(res=>{
-            newEssay.images = res.substring(0,res.length-1);
+        if(files.length<0){
+            Essay.update(newEssay,{
+                'where':{
+                    'id':newEssay.id
+                }
+            })
             ctx.body = newEssay
-        })
+        }else{
+            imagePath(files).then(res=>{
+                newEssay.images = res.substring(0,res.length-1);
+                // console.log({...newEssay})
+                Essay.update(newEssay,{
+                    'where':{
+                        'id':newEssay.id
+                    }
+                })
+                ctx.body = newEssay
+            })
+        }
     }else{
         ctx.body = {
             code: 3,

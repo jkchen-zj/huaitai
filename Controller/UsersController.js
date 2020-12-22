@@ -25,15 +25,15 @@ const listUsers = async (ctx,next)=>{
 }
 
 const showUserDetail = async (ctx,nexy)=>{
-
-    let result = await User.findAndCountAll({
-        where: ctx.require.body.id,
-        offset: start,
+    let result = await Users.findAndCountAll({
+        where: {
+            id: ctx.request.body.id
+        },
+        attributes:['id','name','email','active'],
         include: [{
             model:Essay,
             attributes:['essay_id','title']
         }],
-        raw:true
     })
 
     if(result != null){
